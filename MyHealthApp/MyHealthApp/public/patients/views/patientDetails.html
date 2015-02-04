@@ -1,0 +1,62 @@
+﻿<form name="myForm" class="form-horizontal" novalidate>
+
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>
+                <input type="number" name="id" ng-model="patient.id" required>
+                <span ng-show="myForm.id.$error.required">FirstName is required.</span>
+                <span style="color:red" ng-show="myForm.id.$invalid">
+                    Invalid Id
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>
+                <input type="text" name="firstName" ng-model="patient.firstName" ng-pattern="/[A-Z][a-z]/" required>
+                    <span ng-show="myForm.firstName.$error.required">FirstName is required.</span>
+                <span style="color:red" ng-show="myForm.firstName.$invalid">
+                Invalid FirstName</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>
+                <input type="text" name="lastName" ng-model="patient.lastName" ng-pattern="/[A-Z][a-z]/" required />
+                <span ng-show="myForm.lastName.$error.required">LastName is required.</span>
+
+                <span style="color:red" ng-show="myForm.lastName.$invalid">
+                    Invalid FirstName</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td><input type="text" name="phoneNo" ng-model="patient.phoneNo" ng-pattern="/[0-9]{10}/" ng-maxlength="10" required />
+                <span ng-show="myForm.phoneNo.$error.required">phoneNumber Required.</span>
+                <span style="color:red" ng-show="myForm.phoneNo.$invalid">
+                    Invalid Num
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>Last Visit date</td>
+            <td><input type="text" name="lastVisitDate" ng-model="patient.lastVisitDate" required />
+                <span style="color:red" ng-show="myForm.lastVisitDate.$invalid">
+                    <span ng-show="myForm.lastVisitDate.$error.required">VisitDate is required.</span>
+                </span></td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>
+                <input type="checkbox" name="status" checked="checked" ng-model="patient.status" required /> Enabled
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="btn">
+                <input type="button" ng-click="addPatient(patient)" value="Add Patient"
+                       ng-disabled="myForm.id.$invalid ||myForm.lastName.$invalid || myForm.firstName.$invalid || myForm.phoneNo.$invalid || myForm.lastVisitDate.$invalid">
+            </td>
+        </tr>
+    </table>
+</form>
