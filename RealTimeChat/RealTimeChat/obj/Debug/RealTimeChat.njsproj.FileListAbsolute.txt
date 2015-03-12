@@ -1,0 +1,2 @@
+C:\Users\Gaurav\documents\visual studio 2013\Projectstest\RealTimeChat\RealTimeChat\obj\Debug\RealTimeChat.njsprojResolveAssemblyReference.cache
+C:\Users\Gaurav\documents\visual studio 2013\Projectstest\RealTimeChat\RealTimeChat\bin\Microsoft.NodejsTools.WebRole.dll

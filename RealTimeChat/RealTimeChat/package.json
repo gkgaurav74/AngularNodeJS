@@ -1,0 +1,16 @@
+{
+  "name": "RealTimeChat",
+  "version": "0.0.0",
+  "description": "RealTimeChat",
+  "main": "server.js",
+  "author": {
+    "name": "Gaurav",
+    "email": ""
+  },
+   "dependencies": {
+    "express": "4.12.2",
+    "socket.io": "1.3.5",
+    "mongodb": "1.4.33"
+}
+
+}

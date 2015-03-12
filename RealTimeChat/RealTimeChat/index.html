@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Real Time Chat</title>
+    <link href="main.css" rel="stylesheet" />
+    <script src="http://127.0.0.1:8080/socket.io/socket.io.js"></script>
+    <style type="text/css">
+        .message{
+            display:block;
+            padding:10px;
+            border-bottom:1px solid #EEE;
+        }
+        .message span{
+            padding:5px;
+            direction:rtl;
+            display:block;
+            font-size:10px;
+            color:gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat">
+        <input type="text" class="chat-name" id="cname" placeholder="Enter your name" />
+        <div class="chat-messages" id="cmessages">
+        </div>
+        <textarea class="chat-textarea" id="ctarea" type your messages"></textarea>
+        <div id="chatstatus" class="chat-status">Status:<span>Idle</span></div>
+    </div>
+</body>
+<script>
+    var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+    (function () {
+        var textarea = document.getElementById("ctarea");
+        var messages = document.getElementById("cmessages");
+        var chatName = document.getElementById("cname");
+        var chatStatus = document.getElementById("chatstatus");
+
+        try {
+            var socket = io.connect('http://127.0.0.1:8080');
+        }
+        catch (e) {
+        }
+
+        if (socket !== undefined) {
+
+            socket.on('output', function (data) {
+                if (data.length) {
+                    for (var x = 0; x <data.length; x = x + 1) {
+
+                        var message = document.createElement('div');
+                        message.setAttribute('class', 'message');
+                        message.innerHTML = data[x].name + ':' + data[x].message+"<span>"+data[x].date+"</span>";
+
+                        
+                        //messages.insertAfter(messages.firstChild, message);
+                        messages.appendChild(message);
+
+                        //mving down scroll bar
+                        messages.scrollTop = messages.scrollHeight;
+                    }
+                }
+            });
+
+            //listening fr status
+            socket.on('status', function (data) {
+                status = "";
+                if (typeof data === 'object') {
+                    status = data.message;
+
+                    if(data.clear===true)
+                    {
+                        textarea.value="";
+                    }
+                } else {
+                    status = data;
+                }
+                chatStatus.innerHTML="Status:<span>" + status + "</span>";
+            });
+            textarea.addEventListener('keydown', function (event) {
+                var date = new Date();
+                
+                var self = this;
+                name = chatName.value;
+                if (event.which === 13 && event.shiftKey === false) {
+                    socket.emit('input', {
+
+                        name: name,
+                        message: self.value,
+                        date: month[date.getMonth()] + " " + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+                    });
+                }
+            });
+        }
+    })();
+</script>
+
+</html>
+
